@@ -1,5 +1,5 @@
 {
-  "name": "toy-private-combo-bot",
+  "name": "toy-private-bot",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -7,6 +7,6 @@
   },
   "dependencies": {
     "@whiskeysockets/baileys": "^6.7.7",
-    "pino": "^8.0.0"
+    "pino": "^8.17.2"
   }
 }
