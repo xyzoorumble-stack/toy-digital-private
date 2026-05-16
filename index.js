@@ -1,7 +1,6 @@
 const {
 default: makeWASocket,
-useMultiFileAuthState,
-DisconnectReason
+useMultiFileAuthState
 } = require("@whiskeysockets/baileys")
 
 const pino = require("pino")
@@ -13,48 +12,12 @@ await useMultiFileAuthState("./session")
 
 const sock = makeWASocket({
 logger: pino({ level: "silent" }),
-auth: state,
-browser: ["TOY DIGITAL", "Chrome", "1.0.0"]
+auth: state
 })
 
 sock.ev.on("creds.update", saveCreds)
 
-if (!sock.authState.creds.registered) {
-
-const phoneNumber = "6285768514765"
-
-const code = await sock.requestPairingCode(phoneNumber)
-
-console.log(`
-=========================
-PAIRING CODE BOT:
-${code}
-=========================
-`)
-}
-
-sock.ev.on("connection.update", async (update) => {
-
-const { connection, lastDisconnect } = update
-
-if (connection === "open") {
-console.log("BOT BERHASIL TERHUBUNG")
-}
-
-if (connection === "close") {
-
-const shouldReconnect =
-lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut
-
-console.log("Koneksi terputus. Reconnect:", shouldReconnect)
-
-if (shouldReconnect) {
-startBot()
-}
-
-}
-
-})
+console.log("BOT ONLINE ✅")
 
 sock.ev.on("messages.upsert", async ({ messages }) => {
 
@@ -72,38 +35,14 @@ if (text === ".menu") {
 
 await sock.sendMessage(from, {
 text:
-`🔥 TOY DIGITAL PRIVATE BOT 🔥
+`🔥 TOY DIGITAL BOT 🔥
 
-📦 MENU UTAMA
+✅ BOT ONLINE
+
+📦 MENU:
 • .menu
-• .owner
 • .ping
-• .script
-• .produk
-• .runtime
-
-🛡️ FITUR GRUP
-• Anti Link
-• Anti Spam
-• Anti Virtex
-• Anti Delete
-• Welcome
-• Set Rules
-• Tag All
-• Hide Tag
-
-💼 FITUR BISNIS
-• Auto Respon
-• Katalog Produk
-• Order Otomatis
-• Broadcast
-• Promo Otomatis
-
-👑 OWNER MENU
-• Add Premium
-• Del Premium
-• Backup Database
-• Restart Bot`
+• .owner`
 })
 
 }
@@ -111,7 +50,7 @@ text:
 if (text === ".ping") {
 
 await sock.sendMessage(from, {
-text: "BOT ONLINE ✅"
+text: "PONG ✅"
 })
 
 }
@@ -120,41 +59,6 @@ if (text === ".owner") {
 
 await sock.sendMessage(from, {
 text: "OWNER : TOY DIGITAL STORE"
-})
-
-}
-
-if (text === ".script") {
-
-await sock.sendMessage(from, {
-text: "PRIVATE SCRIPT BY TOY DIGITAL STORE"
-})
-
-}
-
-if (text === ".produk") {
-
-await sock.sendMessage(from, {
-text:
-`📦 LIST PRODUK
-
-• SCRIPT GRUP BASIC
-• SCRIPT GRUP PREMIUM
-• SCRIPT GRUP FULL
-
-• SCRIPT BISNIS BASIC
-• SCRIPT BISNIS PREMIUM
-• SCRIPT BISNIS FULL
-
-• SCRIPT COMBO BISNIS + GRUP`
-})
-
-}
-
-if (text === ".runtime") {
-
-await sock.sendMessage(from, {
-text: "BOT AKTIF 24 JAM ✅"
 })
 
 }
