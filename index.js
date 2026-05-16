@@ -1,0 +1,22 @@
+
+console.log("TOY SCRIPT PRIVATE COMBO 10000");
+
+function menu(){
+return `
+🔥 TOY PRIVATE COMBO
+
+✅ 10000 FITUR
+✅ BISNIS + JAGA GRUP
+✅ AUTO REPLY
+✅ ANTI LINK
+✅ ANTI SPAM
+✅ OWNER MENU
+✅ DATABASE
+✅ STORE MENU
+✅ HIBURAN
+✅ INSTALLER
+✅ FULL NO ENC
+`;
+}
+
+console.log(menu());
